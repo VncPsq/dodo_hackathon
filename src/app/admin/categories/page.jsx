@@ -5,10 +5,10 @@ async function Categories() {
 
 	return (
 		<>
-			<h1>Ajout de la categorie</h1>
+			<h1>Ajout de la priorité</h1>
 			<PostCategory />
 			<section>
-				<h2>Toutes les categorie</h2>
+				<h2>Toutes les priorités</h2>
 				{categories && (
 					<table>
 						<thead>
@@ -19,10 +19,10 @@ async function Categories() {
 							</tr>
 						</thead>
 						<tbody>
-							{categories.map((category) => (
-								<tr key={category.id}>
-									<td>{category.id}</td>
-									<td>{category.name}</td>
+							{categories.map((priority) => (
+								<tr key={priority.id}>
+									<td>{priority.id}</td>
+									<td>{priority.name}</td>
 									<td>
 										<button>Editer</button>
 										<button>Supprimer</button>
