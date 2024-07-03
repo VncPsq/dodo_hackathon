@@ -48,8 +48,8 @@ model Service {
   available Boolean 
   category Category  @relation(fields: [categoryID], references: [id])
   categoryID Int
-  helper User @relation(name: "UserHelpers", fields: [helperID], references: [id])
-  helperID Int
+  helper User? @relation(name: "UserHelpers", fields: [helperID], references: [id])
+  helperID Int?
   owner User  @relation(name: "UserOwners", fields: [ownerID], references: [id])
   ownerID Int
   priority Priority @relation(fields: [priorityID], references: [id])
