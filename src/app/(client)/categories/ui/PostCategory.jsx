@@ -8,18 +8,21 @@ function PostCategory() {
 		setCategory(event.target.value);
 	};
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		fetch("/api/categories/post", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ category }),
-		})
-			.then((response) => response.json())
-			.then((data) => console.log(data))
-			.catch((err) => console.error(err));
+	const handleSubmit = async (event) => {
+		try {
+			event.preventDefault();
+			await fetch("/api/categories", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ category }),
+			});
+
+			window.location.reload();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	return (

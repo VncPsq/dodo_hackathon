@@ -1,16 +1,7 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import PostCategory from "./ui/PostCategory";
-
-function Categories() {
-	const [allCategories, setAllCategories] = useState([]);
-	useEffect(() => {
-		fetch("/api/categories")
-			.then((response) => response.json())
-			.then((data) => setAllCategories(data.categories))
-			.catch((err) => console.error(err));
-	}, []);
+import prisma from "@/lib/prisma";
+async function Categories() {
+	const categories = await prisma.category.findMany();
 
 	return (
 		<>
@@ -18,12 +9,28 @@ function Categories() {
 			<PostCategory />
 			<section>
 				<h2>Toutes les categorie</h2>
-				{allCategories && (
-					<ul>
-						{allCategories.map((category) => (
-							<li key={category.id}>{category.name}</li>
-						))}
-					</ul>
+				{categories && (
+					<table>
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nom</th>
+								<th>Gérer</th>
+							</tr>
+						</thead>
+						<tbody>
+							{categories.map((category) => (
+								<tr key={category.id}>
+									<td>{category.id}</td>
+									<td>{category.name}</td>
+									<td>
+										<button>Editer</button>
+										<button>Supprimer</button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				)}
 			</section>
 		</>
