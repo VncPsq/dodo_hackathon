@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Doc : https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/one-to-many-relations
+
+// Création de l'entié User
+model User {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(50)
+  email String @unique
+  password String 
+  street String 
+  zipcode String  @db.VarChar(5)
+  rating Int
+  role Role @default(USER)
+  owners Service[] @relation(name: "UserOwners")
+  helpers Service[] @relation(name: "UserHelpers")
+}
+
+// Creation de l'entité Category
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  services Service[]
+}
+
+// Creation de l'entité Priority
+model Priority {
+  id Int @id @default(autoincrement())
+  name String
+  services Service[]
+}
+
+// Creation de l'entité Service
+model Service {
+  id Int @id @default(autoincrement())
+  title String
+  content String @db.Text
+  createdAt DateTime @default(now())
+  expiration DateTime 
+  available Boolean 
+  category Category  @relation(fields: [categoryID], references: [id])
+  categoryID Int
+  helper User @relation(name: "UserHelpers", fields: [helperID], references: [id])
+  helperID Int
+  owner User  @relation(name: "UserOwners", fields: [ownerID], references: [id])
+  ownerID Int
+  priority Priority @relation(fields: [priorityID], references: [id])
+  priorityID Int
+}
+
+// Création de l'entité Role
+enum Role {
+  USER
+  ADMIN
+}
+
