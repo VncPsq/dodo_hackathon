@@ -1,11 +1,10 @@
 import prisma from "@/lib/prisma";
-import { NextResponse, NextRequest } from "next/server";
-
+import { NextResponse } from "next/server";
 import argon2 from "argon2";
 
 const hashingOptions = {
 	type: argon2.argon2id,
-	memoryCost: 19 * 2 ** 10 /* 19 Mio en kio (19 * 1024 kio) */,
+	memoryCost: 19 * 2 ** 10, // 19 MiB in KiB
 	timeCost: 2,
 	parallelism: 1,
 };
@@ -21,10 +20,11 @@ export async function GET() {
 	return NextResponse.json(users);
 }
 
-export async function POST(NextRequest) {
-	const data = await NextRequest.json();
+export async function POST(request) {
+	const data = await request.json();
+	const action = request.url.split("=")[1];
 
-	if (NextRequest.url.split("=")[1] === "login") {
+	if (action === "login") {
 		const { email, password } = data;
 		const user = await prisma.user.findUnique({
 			where: {
@@ -56,8 +56,9 @@ export async function POST(NextRequest) {
 		};
 
 		return NextResponse.json({ token });
-	} else if (NextRequest.url.split("=")[1] === "register") {
-		const { name, email, password, street, zipcode } = req.body;
+	} else if (action === "register") {
+		console.log({ data });
+		const { name, email, password, street, zipcode } = data;
 
 		const hashedPassword = await argon2.hash(password, hashingOptions);
 
@@ -72,11 +73,19 @@ export async function POST(NextRequest) {
 					rating: 0,
 				},
 			});
-			NextResponse.status(200).json({ msg: "User bien save" });
+			return NextResponse.json(
+				{ msg: "User successfully created" },
+				{ status: 201 }
+			);
 		} catch (error) {
-			NextResponse.status(500).json({ error });
+			return NextResponse.json({ error: error.message }, { status: 500 });
 		} finally {
 			await prisma.$disconnect();
 		}
+	} else {
+		return NextResponse.json(
+			{ message: "Invalid action" },
+			{ status: 400 }
+		);
 	}
 }

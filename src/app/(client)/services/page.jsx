@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import PostService from "./ui/PostService";
+import Dashboard from "@/components/Dashboard";
 function Services() {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [services, setServices] = useState([]);
@@ -14,6 +15,12 @@ function Services() {
 			console.error(error);
 		}
 	};
+
+	useEffect(() => {
+		fetchServices();
+	}, [isSubmit]);
+
+	console.log(services);
 
 	const handleAccepted = async (e) => {
 		const serviceId = e.target.dataset.id;
@@ -34,19 +41,19 @@ function Services() {
 			console.error(error);
 		}
 	};
-
-	useEffect(() => {
-		fetchServices();
-	}, [isSubmit]);
-
-	console.log(services);
-
 	return (
 		<>
 			<h1>Ajout de la categorie</h1>
 			<PostService isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
+
 			<section>
 				<h2>Toutes les categorie</h2>
+
+				<Dashboard
+					services={services}
+					handleAccepted={handleAccepted}
+				/>
+				{/* 
 				{services && (
 					<table>
 						<thead>
@@ -81,7 +88,7 @@ function Services() {
 							))}
 						</tbody>
 					</table>
-				)}
+				)} */}
 			</section>
 		</>
 	);
