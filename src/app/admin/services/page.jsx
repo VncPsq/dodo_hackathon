@@ -33,7 +33,7 @@ function Services() {
 							<tr>
 								<th>Id</th>
 								<th>Nom</th>
-								<th>Accepter</th>
+								<th>Gérer</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -42,7 +42,8 @@ function Services() {
 									<td>{service.id}</td>
 									<td>{service.title}</td>
 									<td>
-										<button>J'accepte la mission</button>
+										<button>Editer</button>
+										<button>Supprimer</button>
 									</td>
 								</tr>
 							))}
