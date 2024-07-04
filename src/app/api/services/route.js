@@ -8,6 +8,7 @@ export async function GET() {
 				category: true,
 				owner: true,
 				priority: true,
+				helper: true,
 			},
 		}),
 		{ status: 200 }

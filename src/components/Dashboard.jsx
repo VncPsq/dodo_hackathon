@@ -58,7 +58,10 @@ export default function Dashboard({ services, handleAccepted }) {
 													J'accepte la mission
 												</button>
 											) : (
-												<th>Service accepté 🎉</th>
+												<th>
+													Service accepté 🎉 (merci{" "}
+													{service.helper.name})
+												</th>
 											)}
 										</td>
 									</tr>
