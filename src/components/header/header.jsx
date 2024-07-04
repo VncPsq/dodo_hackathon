@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
 function Header() {
+
   const [isOpen, setIsOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const isLogged = localStorage.getItem("user") || false;
 
   useEffect(() => {
+    const isLogged = localStorage.getItem("user") || false;
     if (isLogged && JSON.parse(isLogged).role === "ADMIN") {
       setIsAdmin(true);
     }

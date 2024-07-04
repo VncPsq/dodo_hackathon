@@ -15,6 +15,26 @@ function Services() {
 		}
 	};
 
+	const handleAccepted = async (e) => {
+		const serviceId = e.target.dataset.id;
+		const userId = JSON.parse(localStorage.getItem("user"))?.id;
+
+		try {
+			const res = await fetch("/api/services", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ id: serviceId, helperID: userId }),
+			});
+			const data = await res.json();
+			console.log(data);
+			setIsSubmit(!isSubmit);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
 		fetchServices();
 	}, [isSubmit]);
@@ -42,7 +62,20 @@ function Services() {
 									<td>{service.id}</td>
 									<td>{service.title}</td>
 									<td>
-										<button>J'accepte la mission</button>
+										{JSON.parse(
+											localStorage.getItem("user")
+										)?.id === service?.ownerID ? (
+											<th>Tu es le proprio 😉</th>
+										) : service?.helperID === null ? (
+											<button
+												data-id={service.id}
+												onClick={handleAccepted}
+											>
+												J'accepte la mission
+											</button>
+										) : (
+											<th>Service accepté 🎉</th>
+										)}
 									</td>
 								</tr>
 							))}
