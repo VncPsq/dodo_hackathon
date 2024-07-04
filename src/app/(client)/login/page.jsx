@@ -13,6 +13,7 @@ const LoginPage = () => {
 		e.preventDefault();
 		try {
 			await login(email, password);
+			window.location.href = "/";
 		} catch (err) {
 			setError(err.message);
 		}

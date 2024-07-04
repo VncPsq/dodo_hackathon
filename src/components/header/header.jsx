@@ -6,13 +6,17 @@ import { useAuth } from "@/context/AuthContext";
 
 function Header() {
 	const [isAdmin, setIsAdmin] = useState(false);
-	const isLogged = localStorage.getItem("user") || false;
+	const [isLogged, setIsLogged] = useState(false);
 
 	useEffect(() => {
-		if (JSON.parse(isLogged).role === "ADMIN") {
-			setIsAdmin(true);
+		const user = localStorage.getItem("user");
+		if (user) {
+			setIsLogged(true);
+			if (JSON.parse(user).role === "ADMIN") {
+				setIsAdmin(true);
+			}
 		}
-	}, [isLogged]);
+	}, []);
 
 	const { logout } = useAuth();
 

@@ -41,3 +41,29 @@ export async function POST(req) {
 		await prisma.$disconnect();
 	}
 }
+
+export async function PUT(req) {
+	const data = await req.json();
+
+	try {
+		const updateService = await prisma.service.update({
+			where: {
+				id: Number(data.id),
+			},
+			data: {
+				available: false,
+				helperID: Number(data.helperID),
+			},
+		});
+		return NextResponse.json({ updateService }, { status: 200 });
+	} catch (error) {
+		return NextResponse.json(
+			{
+				error: error.message,
+			},
+			{ status: 500 }
+		);
+	} finally {
+		await prisma.$disconnect();
+	}
+}
