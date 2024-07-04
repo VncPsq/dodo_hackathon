@@ -5,49 +5,147 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 
 function Header() {
-	const [isAdmin, setIsAdmin] = useState(false);
-	const [isLogged, setIsLogged] = useState(false);
 
-	useEffect(() => {
-		const user = localStorage.getItem("user");
-		if (user) {
-			setIsLogged(true);
-			if (JSON.parse(user).role === "ADMIN") {
-				setIsAdmin(true);
-			}
-		}
-	}, []);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-	const { logout } = useAuth();
+  useEffect(() => {
+    const isLogged = localStorage.getItem("user") || false;
+    if (isLogged && JSON.parse(isLogged).role === "ADMIN") {
+      setIsAdmin(true);
+    }
+  }, [isLogged]);
 
-	return (
-		<header className="bg-gray-800 text-white py-4">
-			<div className="container mx-auto text-center">
-				<p className="text-sm">Dodo Team</p>
-			</div>
-			<nav>
-				<Link href="/">Accueil</Link>
-				{isAdmin ? (
-					<>
-						<Link href="/admin/categories">Categories</Link>
-						<Link href="/admin/priorities">Priorities</Link>
-					</>
-				) : null}
+  const { logout } = useAuth();
 
-				<div>
-					<Link href="/register">Register</Link>
-					{isLogged ? (
-						<>
-							<button onClick={logout}>Logout</button>
-							<Link href="/services">Services</Link>
-						</>
-					) : (
-						<Link href="/login">login</Link>
-					)}
-				</div>
-			</nav>
-		</header>
-	);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <header
+      className="relative bg-cover bg-center text-white py-4 shadow-lg"
+      style={{
+        backgroundImage:
+          "url('https://arilcambresis.com/wp-content/uploads/2022/10/devenir-aide-a-domicile-e1688538697902-667x551.jpg')",
+        height: "400px",
+        backgroundOrigin: "cover",
+        backgroundPosition: "top",
+      }}
+    >
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="container mx-auto relative z-10 flex justify-between items-center px-4 md:px-0">
+        <div className="text-xl font-bold tracking-wide">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-yellow-300 drop-shadow-lg font-maven">
+            UniVersTous
+          </h1>
+        </div>
+        <div className="md:hidden">
+          <button
+            onClick={toggleMenu}
+            className="focus:outline-none flex items-center justify-center p-2 rounded-md bg-gray-800 hover:bg-gray-700 transition duration-300"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <nav className="hidden md:flex space-x-4">
+          <Link href="/" legacyBehavior>
+            <a className="mt-2 md:mt-0 px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300 font-montserrat">
+              Accueil
+            </a>
+          </Link>
+          {isAdmin && (
+            <>
+              <Link href="/admin/categories" legacyBehavior>
+                <a className="mt-2 md:mt-0 px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                  Categories
+                </a>
+              </Link>
+              <Link href="/admin/priorities" legacyBehavior>
+                <a className="mt-2 md:mt-0 px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                  Priorities
+                </a>
+              </Link>
+            </>
+          )}
+          <Link href="/register" legacyBehavior>
+            <a className="mt-2 md:mt-0 px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+              Register
+            </a>
+          </Link>
+          {isLogged ? (
+            <button
+              onClick={logout}
+              className="mt-2 md:mt-0 px-2 py-1 rounded-md bg-red-600 hover:bg-red-700 transition duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login" legacyBehavior>
+              <a className="mt-2 md:mt-0 px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                Login
+              </a>
+            </Link>
+          )}
+        </nav>
+      </div>
+      {isOpen && (
+        <div className="md:hidden mt-4 px-4 flex flex-col space-y-2 relative z-20">
+          <Link href="/" legacyBehavior>
+            <a className="block px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+              Accueil
+            </a>
+          </Link>
+          {isAdmin && (
+            <>
+              <Link href="/admin/categories" legacyBehavior>
+                <a className="block px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                  Categories
+                </a>
+              </Link>
+              <Link href="/admin/priorities" legacyBehavior>
+                <a className="block px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                  Priorities
+                </a>
+              </Link>
+            </>
+          )}
+          <Link href="/register" legacyBehavior>
+            <a className="block px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+              Register
+            </a>
+          </Link>
+          {isLogged ? (
+            <button
+              onClick={logout}
+              className="block px-2 py-1 rounded-md bg-red-600 hover:bg-red-700 transition duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link href="/login" legacyBehavior>
+              <a className="block px-2 py-1 rounded-md hover:bg-blue-700 transition duration-300">
+                Login
+              </a>
+            </Link>
+          )}
+        </div>
+      )}
+    </header>
+  );
 }
 
 export default Header;
