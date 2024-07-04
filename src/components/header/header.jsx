@@ -1,23 +1,20 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { verify } from "@/lib/jwt";
 
 function Header() {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const isLogged = localStorage.getItem("user") || false;
-	const { logout, user } = useAuth();
 
-	async function checkUser(user) {
-		const role = await verify(user).role;
-		if (role === "admin") {
-			return true;
+	useEffect(() => {
+		if (JSON.parse(isLogged).role === "ADMIN") {
+			setIsAdmin(true);
 		}
-		return false;
-	}
+	}, [isLogged]);
 
-	checkUser(user).then((res) => setIsAdmin(res));
+	const { logout } = useAuth();
 
 	return (
 		<header className="bg-gray-800 text-white py-4">

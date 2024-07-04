@@ -1,12 +1,35 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 import PostCategory from "./ui/PostCategory";
-import prisma from "@/lib/prisma";
-async function Categories() {
-	const categories = await prisma.category.findMany();
+function Categories() {
+	const [categories, setCategories] = useState(null);
+	const [isSubmit, setIsSubmit] = useState(false);
+	const { user } = useAuth();
+
+	if (JSON.parse(user) === null || JSON.parse(user).role !== "ADMIN") {
+		window.location.href = "/";
+	}
+
+	useEffect(() => {
+		const fetchCategories = async () => {
+			const res = await fetch("/api/categories", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			setCategories(data);
+		};
+		fetchCategories();
+	}, [isSubmit]);
 
 	return (
 		<>
 			<h1>Ajout de la priorité</h1>
-			<PostCategory />
+			<PostCategory isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
 				<h2>Toutes les priorités</h2>
 				{categories && (

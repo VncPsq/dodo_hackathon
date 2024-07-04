@@ -6,7 +6,7 @@ function Register() {
 		const data = Object.fromEntries(formData);
 
 		try {
-			const response = await fetch("/api/users/register", {
+			const response = await fetch("/api/users?q=register", {
 				method: "POST",
 				body: JSON.stringify(data),
 				headers: {

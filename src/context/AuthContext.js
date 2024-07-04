@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
 	const login = async (email, password) => {
 		try {
-			const res = await fetch("/api/users/login", {
+			const res = await fetch("/api/users?q=login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -26,9 +26,10 @@ export const AuthProvider = ({ children }) => {
 
 			if (res.ok) {
 				const data = await res.json();
+				console.log(data);
 				setUser(data.token);
-				localStorage.setItem("user", data.token);
-				window.location.replace("/");
+				localStorage.setItem("user", JSON.stringify(data.token));
+				// window.location.replace("/");
 			} else {
 				throw new Error("Invalid credentials");
 			}

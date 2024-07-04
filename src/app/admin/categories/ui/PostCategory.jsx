@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-function PostCategory() {
+function PostCategory({ isSubmit, setIsSubmit }) {
 	const [category, setCategory] = useState("");
 
 	const handleChange = (event) => {
@@ -19,7 +19,7 @@ function PostCategory() {
 				body: JSON.stringify({ category }),
 			});
 
-			window.location.reload();
+			setIsSubmit(!isSubmit);
 		} catch (error) {
 			console.error(error);
 		}

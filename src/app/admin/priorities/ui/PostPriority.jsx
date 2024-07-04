@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-function PostPriority() {
+function PostPriority({ isSubmit, setIsSubmit }) {
 	const [priority, setPriority] = useState("");
 
 	const handleChange = (event) => {
@@ -19,7 +19,7 @@ function PostPriority() {
 				body: JSON.stringify({ priority }),
 			});
 
-			window.location.reload();
+			setIsSubmit(!isSubmit);
 		} catch (error) {
 			console.error(error);
 		}

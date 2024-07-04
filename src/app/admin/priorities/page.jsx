@@ -1,12 +1,35 @@
-import PostPriority from "./ui/PostPriority";
-import prisma from "@/lib/prisma";
-async function Priorities() {
-	const priorities = await prisma.priority.findMany();
+"use client";
 
+import PostPriority from "./ui/PostPriority";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+
+function Priorities() {
+	const [priorities, setPriorities] = useState([]);
+	const [isSubmit, setIsSubmit] = useState(false);
+	const { user } = useAuth();
+
+	if (JSON.parse(user) === null || JSON.parse(user).role !== "ADMIN") {
+		window.location.href = "/";
+	}
+
+	useEffect(() => {
+		const fetchCategories = async () => {
+			const res = await fetch("/api/priorities", {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await res.json();
+			setPriorities(data);
+		};
+		fetchCategories();
+	}, [isSubmit]);
 	return (
 		<>
 			<h1>Ajout de la priorité</h1>
-			<PostPriority />
+			<PostPriority isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
 				<h2>Toutes les priorités</h2>
 				{priorities && (
