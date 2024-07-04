@@ -1,25 +1,25 @@
 "use client";
 import { useState } from "react";
 
-function PostPriority() {
-	const [priority, setPriority] = useState("");
+function PostCategory({ isSubmit, setIsSubmit }) {
+	const [category, setCategory] = useState("");
 
 	const handleChange = (event) => {
-		setPriority(event.target.value);
+		setCategory(event.target.value);
 	};
 
 	const handleSubmit = async (event) => {
 		try {
 			event.preventDefault();
-			await fetch("/api/priorities", {
+			await fetch("/api/categories", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ priority }),
+				body: JSON.stringify({ category }),
 			});
 
-			window.location.reload();
+			setIsSubmit(!isSubmit);
 		} catch (error) {
 			console.error(error);
 		}
@@ -27,11 +27,11 @@ function PostPriority() {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<label htmlFor="name">Nom de la priorité</label>
+			<label htmlFor="name">Nom de la categorie</label>
 			<input type="text" id="name" name="name" onChange={handleChange} />
 			<button type="submit">Go 🏁</button>
 		</form>
 	);
 }
 
-export default PostPriority;
+export default PostCategory;
