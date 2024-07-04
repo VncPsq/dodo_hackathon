@@ -33,7 +33,10 @@ function Header() {
 				<div>
 					<Link href="/register">Register</Link>
 					{isLogged ? (
-						<button onClick={logout}>Logout</button>
+						<>
+							<button onClick={logout}>Logout</button>
+							<Link href="/services">Services</Link>
+						</>
 					) : (
 						<Link href="/login">login</Link>
 					)}

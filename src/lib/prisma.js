@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const opt = {
-	log: ["query", "info", "warn"],
+	log: ["query", "info", "warn", "error"],
 	errorFormat: "pretty",
 };
 
