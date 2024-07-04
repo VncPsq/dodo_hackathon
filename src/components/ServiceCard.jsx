@@ -1,21 +1,29 @@
-function serviceCard() {
-  return (
-    <div class="block rounded-lg bg-slate-700 p-6 text-surface shadow-secondary-1">
-      <h5 class="mb-2 text-xl font-medium leading-tight">Card title</h5>
-      <p class="mb-4 text-base">
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
-      </p>
-      <button
-        type="button"
-        class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-        data-twe-ripple-init
-        data-twe-ripple-color="light"
-      >
-        Button
-      </button>
-    </div>
-  );
+function ServiceCard() {
+	return (
+		<div class="p-4">
+			<div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
+				<h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+					{service.category.name}
+				</h2>
+				<h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">
+					{service.title}
+				</h1>
+				<p class="leading-relaxed mb-3">{service.content}</p>
+				<div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
+					<Link
+						href={`/services`}
+						className="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					>
+						<CheckCircleIcon
+							aria-hidden="true"
+							className="-ml-0.5 h-5 w-5"
+						/>
+						Voir l'annonce
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default serviceCard;
+export default ServiceCard;
