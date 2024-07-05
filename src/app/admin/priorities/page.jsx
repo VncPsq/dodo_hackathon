@@ -29,10 +29,9 @@ function Priorities() {
 	}, [isSubmit]);
 	return (
 		<div className="w-10/12 m-auto mb-5">
-			<h1>Ajout de la priorité</h1>
 			<PostPriority isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
-				<h2>Toutes les priorités</h2>
+				<h2 className="text-2xl font-bold">Toutes les priorités</h2>
 				<TablePriorities priorities={priorities} />
 			</section>
 		</div>

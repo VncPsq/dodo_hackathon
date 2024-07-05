@@ -29,7 +29,6 @@ function Categories() {
 
 	return (
 		<div className="w-10/12 m-auto mb-5">
-			<h1>Ajout de la catégorie</h1>
 			<PostCategory isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
 				<h2 className="text-2xl font-bold">Toutes les catégories</h2>
