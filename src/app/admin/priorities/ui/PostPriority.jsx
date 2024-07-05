@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function PostPriority({ isSubmit, setIsSubmit }) {
 	const [priority, setPriority] = useState("");
+	const notify = () => toast.success("La priorité est bien ajoutée !");
 
 	const handleChange = (event) => {
 		setPriority(event.target.value);
@@ -18,6 +20,7 @@ function PostPriority({ isSubmit, setIsSubmit }) {
 				},
 				body: JSON.stringify({ priority }),
 			});
+			notify();
 
 			setIsSubmit(!isSubmit);
 		} catch (error) {

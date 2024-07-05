@@ -1,10 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 function PostService({ isSubmit, setIsSubmit }) {
 	const [categories, setCategories] = useState([]);
 	const [priority, setPriority] = useState([]);
 	const user = localStorage.getItem("user");
+	const notify = () => toast.success("Le service est bien ajoutée !");
 
 	const fetchCategories = async () => {
 		try {
@@ -57,6 +59,7 @@ function PostService({ isSubmit, setIsSubmit }) {
 				},
 				body: JSON.stringify(service),
 			});
+			notify();
 			setIsSubmit(!isSubmit);
 		} catch (error) {
 			console.error(error);

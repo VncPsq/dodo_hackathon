@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function PostCategory({ isSubmit, setIsSubmit }) {
 	const [category, setCategory] = useState("");
+	const notify = () => toast.success("La catégorie est bien ajoutée !");
 
 	const handleChange = (event) => {
 		setCategory(event.target.value);
@@ -18,7 +20,7 @@ function PostCategory({ isSubmit, setIsSubmit }) {
 				},
 				body: JSON.stringify({ category }),
 			});
-
+			notify();
 			setIsSubmit(!isSubmit);
 		} catch (error) {
 			console.error(error);
