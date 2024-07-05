@@ -3,6 +3,7 @@
 import PostPriority from "./ui/PostPriority";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
+import TablePriorities from "@/components/TablePriorities";
 
 function Priorities() {
 	const [priorities, setPriorities] = useState([]);
@@ -27,36 +28,14 @@ function Priorities() {
 		fetchCategories();
 	}, [isSubmit]);
 	return (
-		<>
+		<div className="w-10/12 m-auto mb-5">
 			<h1>Ajout de la priorité</h1>
 			<PostPriority isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
 				<h2>Toutes les priorités</h2>
-				{priorities && (
-					<table>
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Nom</th>
-								<th>Gérer</th>
-							</tr>
-						</thead>
-						<tbody>
-							{priorities.map((priority) => (
-								<tr key={priority.id}>
-									<td>{priority.id}</td>
-									<td>{priority.name}</td>
-									<td>
-										<button>Editer</button>
-										<button>Supprimer</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				)}
+				<TablePriorities priorities={priorities} />
 			</section>
-		</>
+		</div>
 	);
 }
 
