@@ -28,9 +28,11 @@ export default function Home() {
 						Toutes les personnes qui ont besoin d'aide 🥰
 					</h2>
 					<div class="grid md:grid-cols-3 -m-4">
-						{services.map((service) => (
-							<ServiceCard service={service} />
-						))}
+						{services
+							.filter((service) => service.available === true)
+							.map((service) => (
+								<ServiceCard service={service} />
+							))}
 					</div>
 				</div>
 			</section>

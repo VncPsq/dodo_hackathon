@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import PostCategory from "./ui/PostCategory";
+import TableCategories from "@/components/TableCategories";
 function Categories() {
-	const [categories, setCategories] = useState(null);
+	const [categories, setCategories] = useState([]);
 	const [isSubmit, setIsSubmit] = useState(false);
 	const { user } = useAuth();
 
@@ -27,36 +28,13 @@ function Categories() {
 	}, [isSubmit]);
 
 	return (
-		<>
-			<h1>Ajout de la priorité</h1>
+		<div className="w-10/12 m-auto mb-5">
 			<PostCategory isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 			<section>
-				<h2>Toutes les priorités</h2>
-				{categories && (
-					<table>
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Nom</th>
-								<th>Gérer</th>
-							</tr>
-						</thead>
-						<tbody>
-							{categories.map((priority) => (
-								<tr key={priority.id}>
-									<td>{priority.id}</td>
-									<td>{priority.name}</td>
-									<td>
-										<button>Editer</button>
-										<button>Supprimer</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				)}
+				<h2 className="text-2xl font-bold">Toutes les catégories</h2>
+				<TableCategories categories={categories} />
 			</section>
-		</>
+		</div>
 	);
 }
 

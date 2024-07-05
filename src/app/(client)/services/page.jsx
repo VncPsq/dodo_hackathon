@@ -43,12 +43,10 @@ function Services() {
 	};
 	return (
 		<>
-			<h1>Ajout de la categorie</h1>
 			<PostService isSubmit={isSubmit} setIsSubmit={setIsSubmit} />
 
-			<section>
-				<h2>Toutes les categorie</h2>
-
+			<section className="w-10/12 m-auto mb-10">
+				<h2 className="text-2xl ">Toutes les catégories</h2>
 				<Dashboard
 					services={services}
 					handleAccepted={handleAccepted}

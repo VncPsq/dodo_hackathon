@@ -3,6 +3,9 @@ import "./globals.css";
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
 import { AuthProvider } from "@/context/AuthContext";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const montserrat = Montserrat({
 	subsets: ["latin"],
@@ -26,6 +29,7 @@ export default function RootLayout({ children }) {
 					<Header />
 					<div className="flex flex-col min-h-60">{children}</div>
 					<Footer />
+					<ToastContainer />
 				</AuthProvider>
 			</body>
 		</html>
